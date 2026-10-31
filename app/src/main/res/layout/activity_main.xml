@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 主界面：ConstraintLayout 负责整体定位，内部用 LinearLayout 排列信息行 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBackground"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="132dp"
+            android:layout_height="132dp"
+            android:background="@drawable/bg_avatar_circle"
+            android:contentDescription="@string/content_desc_avatar"
+            android:padding="26dp"
+            android:src="@drawable/ic_person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_name" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_gender" />
+
+                <TextView
+                    android:id="@+id/tvGender"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_student_id" />
+
+                <TextView
+                    android:id="@+id/tvStudentId"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_phone" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_email" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_hobby" />
+
+                <TextView
+                    android:id="@+id/tvHobby"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp">
+
+                <TextView
+                    style="@style/InfoLabel"
+                    android:text="@string/label_high_score" />
+
+                <TextView
+                    android:id="@+id/tvHighScore"
+                    style="@style/InfoValue" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llButtons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llInfo">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditInfo"
+                style="@style/PinkButton"
+                android:text="@string/btn_edit_info" />
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCardGame"
+                style="@style/PinkButton"
+                android:text="@string/btn_card_game" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

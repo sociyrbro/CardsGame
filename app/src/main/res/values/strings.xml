@@ -1,3 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CardsGame</string>
+    <!-- 应用名称：姓名 + 学号（提交要求 1） -->
+    <string name="app_name">郭理杰2024110213</string>
+
+    <!-- 主界面 -->
+    <string name="label_name">姓名：</string>
+    <string name="label_gender">性别：</string>
+    <string name="label_student_id">学号：</string>
+    <string name="label_phone">电话：</string>
+    <string name="label_email">邮件地址：</string>
+    <string name="label_hobby">爱好：</string>
+    <string name="label_high_score">游戏最高分：</string>
+    <string name="btn_edit_info">修改个人信息</string>
+    <string name="btn_card_game">翻牌游戏</string>
+    <string name="content_desc_avatar">头像</string>
+
+    <!-- 信息修改界面 -->
+    <string name="title_person_info">信息修改</string>
+    <string name="title_card_game">翻牌游戏</string>
+    <string name="hint_name">姓名</string>
+    <string name="hint_student_id">学号</string>
+    <string name="hint_phone">电话号码</string>
+    <string name="hint_email">电子邮件地址</string>
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="hobby_travel">旅游</string>
+    <string name="hobby_reading">阅读</string>
+    <string name="hobby_game">游戏</string>
+    <string name="hobby_shopping">购物</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">取消</string>
+    <string name="content_desc_camera">拍照</string>
+    <string name="msg_camera_demo">演示版本：头像拍照功能暂未接入相机</string>
+    <string name="msg_saved">个人信息已保存</string>
+    <string name="msg_name_empty">姓名不能为空</string>
+
+    <!-- 翻牌游戏界面 -->
+    <string name="score_format">得分：%1$d</string>
+    <string name="btn_reset">重置游戏</string>
+    <string name="btn_exit">退出</string>
+    <string name="card_back_symbol">?</string>
+    <string name="content_desc_card">第 %1$d 张牌</string>
+    <string name="msg_all_matched">恭喜，所有牌都已配对完成！</string>
+
+    <!-- 默认资料 -->
+    <string name="default_name">郭理杰</string>
+    <string name="default_student_id">2024110213</string>
+    <string name="default_phone">13800138000</string>
+    <string name="default_email">guolijie@example.com</string>
+    <string name="hobby_separator">、</string>
 </resources>

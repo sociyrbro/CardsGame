@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单张牌：正面显示花色与点数，背面显示卡片符号 -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_columnWeight="1"
+    android:layout_margin="5dp"
+    android:layout_rowWeight="1"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/cardBack"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    app:strokeColor="#33FFFFFF"
+    app:strokeWidth="1dp">
+
+    <TextView
+        android:id="@+id/tvCardFace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/card_back_symbol"
+        android:textColor="@color/cardBackSymbol"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+</com.google.android.material.card.MaterialCardView>

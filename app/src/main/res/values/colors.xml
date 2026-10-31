@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <!-- 主题色 -->
+    <color name="colorPrimary">#8C4A4A</color>
+    <color name="colorPrimaryDark">#6B3535</color>
+    <color name="colorAccent">#E2A3A3</color>
+
+    <!-- 按钮 -->
+    <color name="buttonPink">#E8A6A6</color>
+    <color name="buttonText">#3E1F1F</color>
+
+    <!-- 页面 -->
+    <color name="screenBackground">#FAF7F7</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#5F5F5F</color>
+    <color name="avatarBackground">#E7CDCD</color>
+
+    <!-- 牌面 -->
+    <color name="cardBack">#B5443F</color>
+    <color name="cardFace">#FFFFFF</color>
+    <color name="cardMatched">#D7EBC6</color>
+    <color name="cardMatchedText">#2E5B22</color>
+    <color name="suitRed">#C62828</color>
+    <color name="suitBlack">#212121</color>
+    <color name="cardBackSymbol">#F3D2D2</color>
+
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
 </resources>

@@ -1,47 +1,46 @@
 package cn.edu.sicnu.cs.stu.guolijie.cardsgame
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import cn.edu.sicnu.cs.stu.guolijie.cardsgame.ui.theme.CardsGameTheme
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import cn.edu.sicnu.cs.stu.guolijie.cardsgame.data.PlayerStore
 
-class MainActivity : ComponentActivity() {
+/**
+ * 主 Activity（MVC 中的 View）：显示玩家基本信息，并提供进入另外两个界面的入口。
+ */
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            CardsGameTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.activity_main)
+        applyContentInsets(findViewById(R.id.root))
+
+        PlayerStore.initIfNeeded(this)
+
+        findViewById<View>(R.id.btnEditInfo).setOnClickListener {
+            startActivity(Intent(this, PersonInfoActivity::class.java))
+        }
+        findViewById<View>(R.id.btnCardGame).setOnClickListener {
+            startActivity(Intent(this, CardGameActivity::class.java))
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    /** 每次回到主界面都重新读取资料，保证修改后立即生效。 */
+    override fun onResume() {
+        super.onResume()
+        showPlayerInfo()
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CardsGameTheme {
-        Greeting("Android")
+    private fun showPlayerInfo() {
+        findViewById<TextView>(R.id.tvName).text = PlayerStore.name
+        findViewById<TextView>(R.id.tvGender).text = PlayerStore.gender
+        findViewById<TextView>(R.id.tvStudentId).text = PlayerStore.studentId
+        findViewById<TextView>(R.id.tvPhone).text = PlayerStore.phone
+        findViewById<TextView>(R.id.tvEmail).text = PlayerStore.email
+        findViewById<TextView>(R.id.tvHobby).text =
+            PlayerStore.hobbies.joinToString(getString(R.string.hobby_separator))
+        findViewById<TextView>(R.id.tvHighScore).text = PlayerStore.highScore.toString()
     }
 }
