@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 翻牌游戏界面：ConstraintLayout 约束一块 1:1 的牌桌，下方是得分与操作按钮 -->
+<!-- 翻牌游戏界面：上方 RecyclerView 铺牌（竖屏 4 列、横屏 6 列），下方是得分与操作按钮 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
@@ -8,25 +8,26 @@
     android:background="@color/screenBackground"
     android:padding="12dp">
 
-    <GridLayout
-        android:id="@+id/gridCards"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCards"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:columnCount="4"
-        android:rowCount="4"
-        android:useDefaultMargins="false"
+        android:clipToPadding="false"
+        android:paddingStart="2dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="2dp"
+        android:paddingBottom="4dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
-        app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="4dp"
