@@ -43,6 +43,12 @@
     <string name="content_desc_card">第 %1$d 张牌</string>
     <string name="msg_all_matched">恭喜，所有牌都已配对完成！</string>
 
+    <!-- 标题栏菜单与关于对话框 -->
+    <string name="menu_about">关于</string>
+    <string name="about_title">关于本应用</string>
+    <string name="about_message">翻牌游戏 v2.0\n\n作者：郭理杰  2024110213\n\n本程序为 Android 移动应用开发实验五作品：使用 RecyclerView 展示牌面，连续翻开三张点数相同或花色相同的牌即可配对成功。\n\n竖屏 4 列 24 张牌，横屏 9 列 18 张牌。</string>
+    <string name="about_ok">确定</string>
+
     <!-- 默认资料 -->
     <string name="default_name">郭理杰</string>
     <string name="default_student_id">2024110213</string>

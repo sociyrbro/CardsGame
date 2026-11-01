@@ -20,18 +20,36 @@ class Card(
     }
 
     /**
-     * 与另一张牌比较：点数相同得 4 分，花色相同得 1 分，都不同得 0 分。
+     * 比较匹配程度。
+     *
+     * otherCards.size == 1：两张牌比大小，点数相同得 4 分，花色相同得 1 分（实验四的两张牌玩法）。
+     * otherCards.size == 2：三张牌一起比，三张点数全相同得 8 分，三张花色全相同得 2 分
+     *                      （实验五的三张牌玩法）。
      */
     fun match(otherCards: Array<Card>): Int {
-        var score = 0
-        if (otherCards.size == 1) {
-            val otherCard = otherCards[0]
-            if (otherCard.rank == rank) {
-                score = 4
-            } else if (otherCard.suit == suit) {
-                score = 1
+        return when (otherCards.size) {
+            1 -> {
+                val otherCard = otherCards[0]
+                when {
+                    otherCard.rank == rank -> 4
+                    otherCard.suit == suit -> 1
+                    else -> 0
+                }
             }
+
+            2 -> {
+                val group = mutableListOf(this)
+                group.addAll(otherCards)
+                val sameRank = group.all { it.rank == rank }
+                val sameSuit = group.all { it.suit == suit }
+                when {
+                    sameRank -> 8
+                    sameSuit -> 2
+                    else -> 0
+                }
+            }
+
+            else -> 0
         }
-        return score
     }
 }

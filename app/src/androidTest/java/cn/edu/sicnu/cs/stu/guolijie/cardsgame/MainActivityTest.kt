@@ -15,10 +15,10 @@ import org.junit.runner.RunWith
 
 /**
  * 界面（UI）测试：启动 Activity 后检查控件是否按要求显示，
- * 并模拟“进入游戏”“修改资料并保存”两条主要交互路径。
+ * 并模拟「进入游戏」「修改资料并保存」「打开关于对话框」几条主要交互路径。
  */
 @RunWith(AndroidJUnit4::class)
-class MainActivityUiTest {
+class MainActivityTest {
 
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val device = UiDevice.getInstance(instrumentation)
@@ -50,13 +50,13 @@ class MainActivityUiTest {
     }
 
     @Test
-    fun cardGameButton_opensGameScreen() {
+    fun cardGameButton_opensGameScreenWithRecyclerView() {
         ActivityScenario.launch(MainActivity::class.java).use {
             device.findObject(By.res(packageName, "btnCardGame")).click()
 
             assertTrue(
                 "点击“翻牌游戏”后应进入游戏界面",
-                device.wait(Until.hasObject(By.res(packageName, "gridCards")), 5000)
+                device.wait(Until.hasObject(By.res(packageName, "recyclerCards")), 5000)
             )
             assertTrue(
                 "新开一局时得分应为 0",
@@ -118,6 +118,28 @@ class MainActivityUiTest {
             assertTrue(
                 "点击退出后应回到主界面",
                 device.wait(Until.hasObject(By.res(packageName, "btnEditInfo")), 5000)
+            )
+        }
+    }
+
+    @Test
+    fun aboutMenu_showsDialog() {
+        ActivityScenario.launch(MainActivity::class.java).use {
+            device.pressMenu()
+
+            val aboutItem = device.wait(
+                Until.findObject(By.text(context.getString(R.string.menu_about))),
+                5000
+            )
+            assertNotNull("菜单里应有“关于”项", aboutItem)
+            aboutItem.click()
+
+            assertTrue(
+                "点击“关于”后应弹出对话框",
+                device.wait(
+                    Until.hasObject(By.text(context.getString(R.string.about_title))),
+                    5000
+                )
             )
         }
     }
