@@ -12,8 +12,9 @@ import com.google.android.material.card.MaterialCardView
 
 /**
  * 翻牌游戏的适配器：把模型里的每一张牌绑定到 item_card 布局上。
- * 通过 [OnCardClickListener] 把点击事件回调给 Activity（控制器），
+ * 通过 [OnCardClickListener] 把点击事件回调给 Fragment（控制器），
  * 适配器本身不修改模型，只负责显示。
+ * 两张牌玩法与三张牌玩法共用这一个适配器，只需要传不同的 [CardMatchingGame]。
  */
 class CardAdapter(
     private val game: CardMatchingGame,
@@ -26,8 +27,8 @@ class CardAdapter(
         const val CARD_MARGIN_DP = 4
     }
 
-    /** 点击回调：由 Activity 实现，按下标处理翻牌逻辑。 */
-    interface OnCardClickListener {
+    /** 点击回调：由 Fragment 实现，按下标处理翻牌逻辑。 */
+    fun interface OnCardClickListener {
         fun onCardClicked(position: Int)
     }
 

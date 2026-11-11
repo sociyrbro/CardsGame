@@ -7,6 +7,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import cn.edu.sicnu.cs.stu.guolijie.cardsgame.data.PlayerStore
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -14,8 +15,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * 界面（UI）测试：启动 Activity 后检查控件是否按要求显示，
- * 并模拟「进入游戏」「修改资料并保存」「打开关于对话框」几条主要交互路径。
+ * 界面（UI）测试：启动唯一的 MainActivity 后检查三个 Fragment 是否都能正确显示，
+ * 底部导航栏能否在三个页面之间切换，以及「保存」按钮是否把资料写进了文件。
  */
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
@@ -27,119 +28,70 @@ class MainActivityTest {
 
     @Before
     fun resetPlayer() {
-        PlayerStore.reset()
+        PlayerStore.resetForTest()
+        context.deleteFile("player_profile.dat")
     }
 
     @Test
-    fun mainScreen_showsPlayerInfoAndBothButtons() {
+    fun defaultTab_showsPersonInfoFragment() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            val name = context.getString(R.string.default_name)
-            val studentId = context.getString(R.string.default_student_id)
-
             assertTrue(
-                "主界面应显示姓名",
-                device.wait(Until.hasObject(By.text(name)), 5000)
+                "默认应显示个人信息 Fragment 的姓名输入框",
+                device.wait(Until.hasObject(By.res(packageName, "etName")), 5000)
             )
             assertTrue(
-                "主界面应显示学号",
-                device.wait(Until.hasObject(By.text(studentId)), 5000)
+                "个人信息 Fragment 上应显示最高分",
+                device.wait(Until.hasObject(By.res(packageName, "tvHighScore")), 5000)
             )
-            assertNotNull(device.findObject(By.res(packageName, "btnEditInfo")))
-            assertNotNull(device.findObject(By.res(packageName, "btnCardGame")))
+            assertNotNull(
+                "底部导航栏应存在",
+                device.findObject(By.res(packageName, "bottomNav"))
+            )
         }
     }
 
     @Test
-    fun cardGameButton_opensGameScreenWithRecyclerView() {
+    fun bottomNav_switchesBetweenThreeFragments() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            device.findObject(By.res(packageName, "btnCardGame")).click()
-
+            device.findObject(By.res(packageName, "nav_two")).click()
             assertTrue(
-                "点击“翻牌游戏”后应进入游戏界面",
+                "切换到两张牌 Fragment 后应显示牌桌",
                 device.wait(Until.hasObject(By.res(packageName, "recyclerCards")), 5000)
             )
             assertTrue(
-                "新开一局时得分应为 0",
-                device.wait(
-                    Until.hasObject(By.text(context.getString(R.string.score_format, 0))),
-                    5000
-                )
+                "两张牌 Fragment 应显示得分",
+                device.wait(Until.hasObject(By.res(packageName, "tvScore")), 5000)
+            )
+
+            device.findObject(By.res(packageName, "nav_three")).click()
+            assertTrue(
+                "切换到三张牌 Fragment 后应显示重置按钮",
+                device.wait(Until.hasObject(By.res(packageName, "btnReset")), 5000)
+            )
+
+            device.findObject(By.res(packageName, "nav_person")).click()
+            assertTrue(
+                "切换回个人信息 Fragment 后应显示姓名输入框",
+                device.wait(Until.hasObject(By.res(packageName, "etName")), 5000)
             )
         }
     }
 
     @Test
-    fun editInfoAndSave_updatesMainScreen() {
+    fun saveButton_writesProfileToFile() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            device.findObject(By.res(packageName, "btnEditInfo")).click()
-
-            val nameBox = device.wait(
-                Until.findObject(By.res(packageName, "etName")),
-                5000
-            )
-            assertNotNull("应打开信息修改界面", nameBox)
-
-            nameBox.text = "郭理杰"
+            assertTrue(device.wait(Until.hasObject(By.res(packageName, "btnSave")), 5000))
             device.findObject(By.res(packageName, "btnSave")).click()
 
-            assertTrue(
-                "保存后主界面应显示新的姓名",
-                device.wait(Until.hasObject(By.text("郭理杰")), 5000)
+            val restored = PlayerStore.read(context)
+            assertNotNull("点击保存后 player_profile.dat 中应能读出资料", restored)
+            assertEquals(
+                context.getString(R.string.default_name),
+                restored!!.name
             )
-        }
-    }
-
-    @Test
-    fun resetButton_keepsScoreAtZero() {
-        ActivityScenario.launch(MainActivity::class.java).use {
-            device.findObject(By.res(packageName, "btnCardGame")).click()
-            device.wait(Until.hasObject(By.res(packageName, "btnReset")), 5000)
-
-            device.findObject(By.res(packageName, "btnReset")).click()
-
-            assertTrue(
-                "重置后得分应回到 0",
-                device.wait(
-                    Until.hasObject(By.text(context.getString(R.string.score_format, 0))),
-                    5000
-                )
-            )
-        }
-    }
-
-    @Test
-    fun exitButton_returnsToMainScreen() {
-        ActivityScenario.launch(MainActivity::class.java).use {
-            device.findObject(By.res(packageName, "btnCardGame")).click()
-            device.wait(Until.hasObject(By.res(packageName, "btnExit")), 5000)
-
-            device.findObject(By.res(packageName, "btnExit")).click()
-
-            assertTrue(
-                "点击退出后应回到主界面",
-                device.wait(Until.hasObject(By.res(packageName, "btnEditInfo")), 5000)
-            )
-        }
-    }
-
-    @Test
-    fun aboutMenu_showsDialog() {
-        ActivityScenario.launch(MainActivity::class.java).use {
-            device.pressMenu()
-
-            val aboutItem = device.wait(
-                Until.findObject(By.text(context.getString(R.string.menu_about))),
-                5000
-            )
-            assertNotNull("菜单里应有“关于”项", aboutItem)
-            aboutItem.click()
-
-            assertTrue(
-                "点击“关于”后应弹出对话框",
-                device.wait(
-                    Until.hasObject(By.text(context.getString(R.string.about_title))),
-                    5000
-                )
+            assertEquals(
+                context.getString(R.string.default_student_id),
+                restored.studentId
             )
         }
     }

@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 翻牌游戏界面：上方 RecyclerView 铺牌（竖屏 4 列、横屏 6 列），下方是得分与操作按钮 -->
+<!--
+    翻牌游戏 Fragment 的布局：两张牌玩法与三张牌玩法共用这一份布局，
+    上方是玩法说明与铺牌的 RecyclerView，下方是得分与「重置游戏」按钮。
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screenBackground"
     android:padding="12dp">
 
+    <TextView
+        android:id="@+id/tvRule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textSecondary"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCards"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="6dp"
         android:clipToPadding="false"
         android:paddingStart="2dp"
         android:paddingTop="4dp"
@@ -21,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvRule" />
 
     <LinearLayout
         android:id="@+id/bottomBar"
@@ -55,14 +68,6 @@
             android:layout_width="wrap_content"
             android:layout_weight="0"
             android:text="@string/btn_reset" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnExit"
-            style="@style/PinkButton"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="0"
-            android:text="@string/btn_exit" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

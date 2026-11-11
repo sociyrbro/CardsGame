@@ -3,7 +3,12 @@
     <!-- 应用名称：姓名 + 学号（提交要求 1） -->
     <string name="app_name">郭理杰2024110213</string>
 
-    <!-- 主界面 -->
+    <!-- 底部导航栏（三个 Fragment） -->
+    <string name="nav_person">个人信息</string>
+    <string name="nav_two">两张牌</string>
+    <string name="nav_three">三张牌</string>
+
+    <!-- 个人信息 Fragment -->
     <string name="label_name">姓名：</string>
     <string name="label_gender">性别：</string>
     <string name="label_student_id">学号：</string>
@@ -11,13 +16,10 @@
     <string name="label_email">邮件地址：</string>
     <string name="label_hobby">爱好：</string>
     <string name="label_high_score">游戏最高分：</string>
-    <string name="btn_edit_info">修改个人信息</string>
-    <string name="btn_card_game">翻牌游戏</string>
-    <string name="content_desc_avatar">头像</string>
-
-    <!-- 信息修改界面 -->
-    <string name="title_person_info">信息修改</string>
-    <string name="title_card_game">翻牌游戏</string>
+    <string name="high_score_format">游戏最高分：%1$d</string>
+    <string name="title_person_info">个人信息</string>
+    <string name="title_two_card_game">两张牌翻牌游戏</string>
+    <string name="title_three_card_game">三张牌翻牌游戏</string>
     <string name="hint_name">姓名</string>
     <string name="hint_student_id">学号</string>
     <string name="hint_phone">电话号码</string>
@@ -29,16 +31,20 @@
     <string name="hobby_game">游戏</string>
     <string name="hobby_shopping">购物</string>
     <string name="btn_save">保存</string>
-    <string name="btn_cancel">取消</string>
+    <string name="btn_reload">还原</string>
+    <string name="content_desc_avatar">头像</string>
     <string name="content_desc_camera">拍照</string>
     <string name="msg_camera_demo">演示版本：头像拍照功能暂未接入相机</string>
-    <string name="msg_saved">个人信息已保存</string>
+    <string name="msg_saved">个人信息已保存到文件 player_profile.dat</string>
+    <string name="msg_reloaded">已从文件重新读取上一次保存的资料</string>
     <string name="msg_name_empty">姓名不能为空</string>
+    <string name="person_info_hint">说明：点击「保存」会把 PlayerProfile 对象序列化写入 player_profile.dat，重启应用自动读回。</string>
 
-    <!-- 翻牌游戏界面 -->
+    <!-- 翻牌游戏 Fragment -->
+    <string name="rule_two_card">两张牌玩法：每次翻开 2 张，点数相同得 4 分、花色相同得 1 分，否则扣 2 分。牌局自动保存。</string>
+    <string name="rule_three_card">三张牌玩法：每次翻开 3 张，三张点数全相同得 8 分、三张花色全相同得 2 分，否则扣 2 分。牌局自动保存。</string>
     <string name="score_format">得分：%1$d</string>
     <string name="btn_reset">重置游戏</string>
-    <string name="btn_exit">退出</string>
     <string name="card_back_symbol">?</string>
     <string name="content_desc_card">第 %1$d 张牌</string>
     <string name="msg_all_matched">恭喜，所有牌都已配对完成！</string>
@@ -46,7 +52,7 @@
     <!-- 标题栏菜单与关于对话框 -->
     <string name="menu_about">关于</string>
     <string name="about_title">关于本应用</string>
-    <string name="about_message">翻牌游戏 v2.0\n\n作者：郭理杰  2024110213\n\n本程序为 Android 移动应用开发实验五作品：使用 RecyclerView 展示牌面，连续翻开三张点数相同或花色相同的牌即可配对成功。\n\n竖屏 4 列 24 张牌，横屏 9 列 18 张牌。</string>
+    <string name="about_message">多 Fragment 翻牌游戏 v3.0\n\n作者：郭理杰  2024110213\n\n本程序为 Android 移动应用开发实验六作品：整个应用只有一个 MainActivity，个人信息、两张牌翻牌游戏、三张牌翻牌游戏分别由三个 Fragment 实现，用底部导航栏切换。\n\n三个页面的状态都通过对象序列化（ObjectOutputStream / ObjectInputStream）保存到文件中，退出程序后再打开可以恢复上一次的界面和牌局。</string>
     <string name="about_ok">确定</string>
 
     <!-- 默认资料 -->

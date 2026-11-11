@@ -11,6 +11,7 @@
 
     <!-- 页面 -->
     <color name="screenBackground">#FAF7F7</color>
+    <color name="divider">#E5D8D8</color>
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#5F5F5F</color>
     <color name="avatarBackground">#E7CDCD</color>

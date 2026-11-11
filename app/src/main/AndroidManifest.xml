@@ -13,6 +13,10 @@
         android:theme="@style/Theme.CardsGame"
         tools:targetApi="31">
 
+        <!--
+            实验六：整个应用只有一个 Activity，个人信息与两种翻牌游戏都是 Fragment，
+            因此这里不再声明 PersonInfoActivity / CardGameActivity。
+        -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,19 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".PersonInfoActivity"
-            android:exported="false"
-            android:label="@string/title_person_info"
-            android:parentActivityName=".MainActivity"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".CardGameActivity"
-            android:exported="false"
-            android:label="@string/title_card_game"
-            android:parentActivityName=".MainActivity" />
 
     </application>
 

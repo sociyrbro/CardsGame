@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 信息修改界面：表单由 LinearLayout 纵向排列 -->
+<!--
+    第 1 个 Fragment：个人信息。
+    头像 + 可编辑的姓名/学号/电话/邮箱/性别/爱好 + 最高分显示 + 保存/还原按钮。
+    点击「保存」会把整个 PlayerProfile 对象序列化写入 player_profile.dat。
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screenBackground"
@@ -21,18 +24,41 @@
 
             <ImageView
                 android:id="@+id/ivAvatar"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:background="@drawable/bg_avatar_circle"
                 android:contentDescription="@string/content_desc_avatar"
-                android:padding="22dp"
+                android:padding="20dp"
                 android:src="@drawable/ic_person" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_person_info"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHighScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/btnCamera"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="18dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/content_desc_camera"
                 android:padding="10dp"
@@ -43,7 +69,7 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_input"
             android:hint="@string/hint_name"
             android:inputType="textPersonName"
@@ -175,7 +201,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="24dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -188,10 +214,18 @@
                 android:layout_height="1dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCancel"
+                android:id="@+id/btnReload"
                 style="@style/PinkButton"
-                android:text="@string/btn_cancel" />
+                android:text="@string/btn_reload" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/person_info_hint"
+            android:textColor="@color/textSecondary"
+            android:textSize="13sp" />
 
     </LinearLayout>
 </ScrollView>

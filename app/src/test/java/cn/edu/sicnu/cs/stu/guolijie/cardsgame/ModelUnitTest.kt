@@ -1,5 +1,6 @@
 package cn.edu.sicnu.cs.stu.guolijie.cardsgame
 
+import cn.edu.sicnu.cs.stu.guolijie.cardsgame.data.PlayerProfile
 import cn.edu.sicnu.cs.stu.guolijie.cardsgame.model.Card
 import cn.edu.sicnu.cs.stu.guolijie.cardsgame.model.CardMatchingGame
 import cn.edu.sicnu.cs.stu.guolijie.cardsgame.model.Deck
@@ -10,10 +11,15 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 /**
  * 游戏模型的单元测试（在开发机上直接运行，不需要设备）。
- * 实验五起模型改为「三张牌」玩法，这里同时覆盖两张牌与三张牌的匹配规则。
+ * 实验六给 CardMatchingGame 增加了 cardsToMatch 参数与 Serializable 接口，
+ * 这里在原有测试之外补充「两张牌玩法」和「序列化往返」两方面的测试。
  */
 class ModelUnitTest {
 
@@ -142,6 +148,90 @@ class ModelUnitTest {
     fun cardCount_matchesRequestedCount() {
         assertEquals(24, CardMatchingGame(24).cardCount())
         assertEquals(18, CardMatchingGame(18).cardCount())
+    }
+
+    /** 实验六：两张牌玩法只需翻开 2 张就判定一次。 */
+    @Test
+    fun twoCardGame_judgesAfterTwoCards() {
+        val game = CardMatchingGame(16, 2)
+        assertEquals(2, game.cardsToMatch)
+        assertEquals(16, game.cardCount())
+
+        game.chooseCardAtIndex(0)
+        // 只翻开一张时还不会判定
+        assertTrue(game.cardAtIndex(0).isChosen)
+
+        game.chooseCardAtIndex(1)
+        // 判定之后无论成功还是失败，都不会有处于「翻开」状态的牌
+        (0 until game.cardCount()).forEach {
+            assertFalse("第 $it 张牌在判定后应已合上", game.cardAtIndex(it).isChosen)
+        }
+    }
+
+    /** 实验六：三张牌玩法的参数与两张牌玩法互不影响。 */
+    @Test
+    fun threeCardGame_keepsCardsToMatchThree() {
+        val game = CardMatchingGame(24, 3)
+        assertEquals(3, game.cardsToMatch)
+
+        game.chooseCardAtIndex(0)
+        game.chooseCardAtIndex(1)
+        // 三张牌玩法翻开两张还不会判定，两张牌仍处于翻开状态
+        assertTrue(game.cardAtIndex(0).isChosen)
+        assertTrue(game.cardAtIndex(1).isChosen)
+    }
+
+    /** 实验六核心：牌局可以序列化后完整恢复（写入文件时用的就是这一套）。 */
+    @Test
+    fun game_serialization_roundTripKeepsState() {
+        val game = CardMatchingGame(24, 3)
+        game.chooseCardAtIndex(0)
+        game.chooseCardAtIndex(5)
+
+        val buffer = ByteArrayOutputStream()
+        ObjectOutputStream(buffer).use { it.writeObject(game) }
+        val restored = ObjectInputStream(
+            ByteArrayInputStream(buffer.toByteArray())
+        ).use { it.readObject() as CardMatchingGame }
+
+        assertEquals(game.score, restored.score)
+        assertEquals(game.cardCount(), restored.cardCount())
+        assertEquals(game.cardsToMatch, restored.cardsToMatch)
+        (0 until game.cardCount()).forEach { index ->
+            val expected = game.cardAtIndex(index)
+            val actual = restored.cardAtIndex(index)
+            assertEquals(expected.toString(), actual.toString())
+            assertEquals(expected.isChosen, actual.isChosen)
+            assertEquals(expected.isMatched, actual.isMatched)
+        }
+    }
+
+    /** 实验六：个人信息对象同样可以序列化后完整恢复。 */
+    @Test
+    fun playerProfile_serialization_roundTripKeepsFields() {
+        val profile = PlayerProfile(
+            name = "郭理杰",
+            gender = "男",
+            studentId = "2024110213",
+            phone = "13800138000",
+            email = "guolijie@example.com",
+            hobbies = mutableListOf("旅游", "阅读", "游戏"),
+            highScore = 42
+        )
+
+        val buffer = ByteArrayOutputStream()
+        ObjectOutputStream(buffer).use { it.writeObject(profile) }
+        val restored = ObjectInputStream(
+            ByteArrayInputStream(buffer.toByteArray())
+        ).use { it.readObject() as PlayerProfile }
+
+        assertEquals(profile.name, restored.name)
+        assertEquals(profile.gender, restored.gender)
+        assertEquals(profile.studentId, restored.studentId)
+        assertEquals(profile.phone, restored.phone)
+        assertEquals(profile.email, restored.email)
+        assertEquals(profile.hobbies, restored.hobbies)
+        assertEquals(profile.highScore, restored.highScore)
     }
 
     /** 找三张花色相同的牌。 */
